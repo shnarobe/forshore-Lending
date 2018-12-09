@@ -1,0 +1,811 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0046)http://www.phpfreaks.com/tutorial/php-security -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PHP Freaks - PHP Help Tutorial: PHP Security</title><link href="http://www.phpfreaks.com/media/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="http://www.phpfreaks.com/media/favicon.ico" rel="icon" type="image/x-icon">
+<link href="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/screen.min.css" media="screen" rel="stylesheet" type="text/css">
+<link href="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/star-rating.css" media="screen" rel="stylesheet" type="text/css">
+<link href="http://feeds.feedburner.com/phpfreaks" rel="alternate" type="application/atom+xml" title="Latest Content">
+<link href="http://feeds.feedburner.com/phpfreaks/tutorials" rel="alternate" type="application/atom+xml" title="Latest Tutorials">
+<link href="http://feeds.feedburner.com/phpfreaks/blog" rel="alternate" type="application/atom+xml" title="Latest Blog Posts">
+<meta http-equiv="Content-Language" content="en-US">
+<meta name="description" content="This tutorial deals with the various security issues a PHP developer, or any person who writes web applications, might face. The tutorial is aimed towards beginners, but other people may find some of the information the tutorial contains useful as well. Topics such as SQL injections, cross-site scripting, remote file inclusion attacks and session security are covered. The tutorial also covers how you will best hide as much information from potential attackers as possible in order to further enhance your web application&#39;s security. This tutorial can be used as a reference although all the content it contains is vital for anyone who wishes to write applications that will run on a webserver regardless of whether the language is PHP or another server-side scripting language."><style type="text/css">
+#bottomAds {
+	margin: 0 10px;
+	height: 60px;
+	border-top: 1px solid #fff;
+	margin-top:20px;
+	background: url(../images/footer.jpg) repeat-x;
+    display:block;clear:both;
+}
+
+#topRightAds {
+	float:right;
+	margin-top:0px;
+}
+
+</style>
+<script src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/ca-pub-8794381281316343.js"></script><script type="text/javascript" async="" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/ga.js"></script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(
+    ["phpf._setAccount", "UA-33447233-1"],
+    ["phpf._setDomainName", "phpfreaks.com"],
+    ["phpf._trackPageview"]
+  );
+  _gaq.push(
+    ["orig._setAccount", ""],
+    ["orig._setDomainName", "phpfreaks.com"],
+    ["orig._trackPageview"]
+  );
+  (function() {
+    var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+    ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+    var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+
+<div id="container">
+	<div id="top"><a href="http://www.phpfreaks.com/page/feeds" id="rss">Subscribe to PHP Freaks RSS</a></div>
+	<div id="banner" onclick="window.location.href=&#39;/&#39;;" style="cursor:pointer;background:url(/media/images/banner.jpg); width:940px;height:132px;">
+		<div id="topRightAds">
+			<script type="text/javascript"><!--
+			google_ad_client = "pub-8794381281316343";
+			/* 468x60, created 10/2/10 - PHP Freaks Update */
+			google_ad_slot = "1560263540";
+			google_ad_width = 468;
+			google_ad_height = 60;
+			//-->
+			</script>
+			<script type="text/javascript" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/show_ads.js">
+			</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent"><iframe width="468" height="60" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;"></iframe></ins></ins>
+		</div>
+	</div>
+
+	<div id="nav">
+		<form id="search" action="http://www.phpfreaks.com/search" method="get">
+			<fieldset>
+				<legend>Search</legend>
+				<label for="searchQuery">Search</label>
+				<input type="text" id="searchQuery" name="q">
+				<input type="submit" id="searchSubmit" value="Search">
+			</fieldset>
+		</form>
+		<ul id="menu">
+			<li><a href="http://www.phpfreaks.com/">Home</a></li>
+			<li class="active"><a href="http://www.phpfreaks.com/tutorials">Tutorials</a></li>
+			<li><a href="http://www.phpfreaks.com/blogs">Blogs</a></li>
+			<li><a href="http://www.phpfreaks.com/news">News</a></li>
+			<li><a href="http://www.phpfreaks.com/forums">Forums</a></li>
+			<li><a href="http://www.phpfreaks.com/page/feeds">Feeds</a></li>
+			<li><a href="http://www.phpfreaks.com/page/irc-live-chat">IRC Chat</a></li>
+			<li><a href="http://www.linuxforum.com/">Linux Forum</a></li>
+		</ul>
+	</div>
+
+<div id="content">
+		<div id="main">
+						<div id="contentView">
+	<div id="left">
+		<h1>PHP Security</h1>
+
+		<a href="http://www.phpfreaks.com/content/print/89" class="print">Print</a>
+
+		<div id="content-info">
+			by <a href="http://www.phpfreaks.com/profile/Daniel0" class="author">Daniel  </a>
+			on <span class="date">Jun 30, 2008 12:40:06 PM</span>
+			- 474,877 views		</div>
+
+		
+
+		
+		<form action="http://www.phpfreaks.com/content/vote/89" id="votes" method="post" class="vote tut">
+			<div>			<input type="hidden" name="vote" value="5" disabled="disabled"><div class="star star_readonly star_on"><a title="1">1</a></div>
+						<div class="star star_readonly star_on"><a title="2">2</a></div>
+						<div class="star star_readonly star_on"><a title="3">3</a></div>
+						<div class="star star_readonly star_on"><a title="4">4</a></div>
+						<div class="star star_readonly star_on"><a title="5">5</a></div>
+			
+			</div>
+		</form>
+
+		<div class="body">
+			<h4>1. Introduction</h4><p>Writing PHP applications is pretty easy. Most people grasp the syntax rather quickly and will within short time be able to produce a script that works using tutorials, references, books, and help forum forums like the one we have here at PHP Freaks. The problem is that most people forget one of the most important aspects that one must consider when writing PHP applications. Many beginners forget the <i>security</i> aspect of PHP. Generally, your users are nice people, they will do as they are told and you will have no problem with these people whatsoever. However, some people are not quite as nice. Some people are outright malicious and are seeking to do damage on your website. They will scrutinize your application for security flaws and exploit these holes. Many times the beginner programmer did not know that these things would even be a problem and therefore it might be a problem to fix the holes. In this tutorial we will look at some of these issues so you can learn how to deal with them, and better yet, prevent them. Obviously I will not promise you that by following this tutorial you will never get successfully attacked. As you become bigger you will also become a bigger and therefore more interesting target - something we have experienced ourselves here at PHP Freaks.</p>
+<p>On the next page we will look at how we should do our error reporting.</p>
+<h4>2. Error reporting</h4><p>Error reporting is a good thing, right? It gives you valuable insight into why your application failed. It gives you useful information such as <i>what</i> happened and <i>where</i> it happened. This information is essential in order to fix the bug. However, you might not be the only one who is interested in knowing why your application failed. By giving the user the details from the errors and/or exceptions thrown by PHP you are giving valuable insight into how your application works. Apart from the source itself, this is one of the most valuable intelligence the attacker might gather when looking for vulnerabilities in your application. Therefore, you should <i>never</i> output the error to the screen when your application is running in a production environment (the live setting in which your application runs when it is available for public use). In your development environment (e.g. on your local computer) it is perfectly fine to output the errors because there are nobody but you to see them and it is easier than having to check an error log when something fails unexpectedly.</p>
+<p>So what <i>should</i> you do when you have launched your new killer app? Bugs might still appear and you need the before-mentioned information in order to fix them. What you can do, and should do, is write the errors into a log file. Actually, PHP does insert all errors into a log file on the server by default. However, if you are on shared hosting then you will most likely not have access to that file and it will therefore be necessary to write it into your own file. There are a couple of <tt>php.ini</tt> directives that are relevant to our problem:</p>
+<ul>
+<li><b><tt>display_errors</tt></b> this directive controls whether PHP errors should be sent to the screen. In a production environment this should always be turned off.</li>
+<li><b><tt>error_reporting</tt></b> this directive controls which errors that should be reported. You should set this to <tt>E_ALL</tt> and you should fix all issues that appear by doing this.</li>
+<li><b><tt>log_errors</tt></b> this controls whether errors should be logged to a file. I would recommend that you always turn this on.</li>
+<li><b><tt>error_log</tt></b> this is the path of the file errors should be written to. This is only applies if <tt>log_errors</tt> is turned on obviously.</li></ul><p>Here is how I would recommend that you configure the before-mentioned four directives:</p>
+<table class="bbcode_table">
+	<caption>Table 2.1: Recommended Configuration</caption>
+	<tbody><tr>
+		<th>Directive name:</th>
+		<th>Production:</th>
+		<th>Development:</th>
+	</tr>
+	<tr>
+		<th><tt>display_errors</tt></th>
+		<td>Off</td>
+		<td>On</td>
+	</tr>
+	<tr>
+		<th><tt>error_reporting</tt></th>
+		<td><tt>E_ALL</tt></td>
+		<td><tt>E_ALL</tt></td>
+	</tr>
+	<tr>
+		<th><tt>log_errors</tt></th>
+		<td>On</td>
+		<td>On</td>
+	</tr>
+	<tr>
+		<th><tt>error_log</tt></th>
+		<td><i>varies</i></td>
+		<td><i>varies</i></td>
+	</tr></tbody></table><p>How <tt>error_log</tt> should be configured obviously depends on how your directory structure is setup (more on that later in this tutorial).</p>
+<h5>2.1. Setting the directives</h5><p>There are a number of different ways you can set the directives in order to achieve the most secure and efficient error handling as I talked about before. If you already know how to do that then you can skip this section.</p>
+<p>First and foremost there is changing the values directly in <tt>php.ini</tt>. However, this is only possible if you are the administrator of the server so for many people this is not an option.</p>
+<p>Apache has some configuration files called <tt>.htaccess</tt> where you can configure Apache directives for the particular folder (and sub-folders) the file is located in. Some hosts do not allow you to use this, but if you can then the PHP module has a directive called <tt>php_flag</tt> which allows you to set PHP directives. You simply do it like this:</p>
+<pre class="bbcode">php_flag directive_name directive_value</pre><p>Note that you cannot use constants like <tt>E_ALL</tt> so you will have to use their numeric values. <tt>E_ALL</tt>'s value is currently 8191, but that might change in the future so you should check the new value if you update a major version. You can see the constants regarding error reporting at any time <a href="http://php.net/manual/en/errorfunc.constants.php">here</a>.</p>
+<p>So for our production environment you can do this:</p>
+<pre class="bbcode">php_flag display_errors off
+php_flag error_reporting 8191
+php_flag log_errors on
+php_flag error_log /home/someone/logs/php_errors.log</pre><p>A third option is to use to use PHP's <a href="http://php.net/ini_set"><tt>ini_set()</tt></a> function. That function takes two arguments: the name of the directive to set and its new value. You can use the constants here. There is a function called <a href="http://php.net/error_reporting"><tt>error_reporting()</tt></a> which you can use to set the error reporting instead.</p>
+<h4>3. SQL injections</h4><p>One of the most common problems with security in web applications is <i>SQL injection</i>. To begin with I will present <a href="http://xkcd.com/327">this comic</a> for you:</p>
+<p><a href="http://xkcd.com/327"><img src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/10001e2c71f9120b196de167d827a843" alt=""></a></p>
+<p>The comic clearly illustrates the problems with SQL injection. If you do not get it, do not worry, you will in just a moment.</p>
+<p>SQL injections work by injecting SQL into the queries you have already written in your script. Often you will pass some sort of variable data to your queries; this data might be influenced by user input. In the above comment we might imagine that the school had a query that looks something like this:</p>
+<pre class="prettyprint lang-php"><span class="pln">$sql </span><span class="pun">=</span><span class="pln"> </span><span class="str">"INSERT INTO Students (name) VALUES ('{$_POST['student_name']}')"</span><span class="pun">;</span></pre><p>The above snippet works. As long as users input data that conforms to an expected format. Now, the mother in the comic did not provide expected data, rather she <i>injected</i> an entire additional query into the existing query. Let's take a look at how the query looks when we enter the string given by the mother:</p>
+<pre class="prettyprint lang-sql"><span class="pln">INSERT INTO students </span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> VALUES </span><span class="pun">(</span><span class="str">'Robert'</span><span class="pun">);</span><span class="pln"> DROP TABLE </span><span class="typ">Students</span><span class="pun">;--</span><span class="str">')</span></pre><p>(Note: PHP does not support stacking queries with all DBMSs. MySQL in particular)</p>
+<p>As you probably know, a semi-colon ends a query and most times it is actually required, but PHP just adds it automatically if you omit it. Therefore, by closing the string and finishing the query by entering the closing parenthesis and a semi-colon we will be able to add an additional query that drops the student table. The two hyphens at the end make whatever comes after it a comment, so whatever remaining characters that might have been in the original query will simply be ignored.</p>
+<p>It should not take too much brain power to figure out why this is a <i>bad</i> thing. Malicious users will basically be able to execute <i>any</i> kind of queries they would like to. This can be done for various purposes. It could be retrieving confidential information or destroying your data just to name a few.</p>
+<h5>3.1. Protecting your script from SQL injections</h5><p>Fortunately, protecting yourself from SQL injections is rather easy. It is just a matter of calling a single function which make data safe for use in a query. How you should do this depends on which PHP extension you are using. Many people use the regular <tt>mysql</tt> extension, so let us start with that one. That particular extension has a function called <a href="http://php.net/mysql_real_escape_string"><tt>mysql_real_escape_string()</tt></a>. Let us take a look at how that one works with a simple example that illustrates its usage:</p>
+<pre class="prettyprint lang-php"><span class="pun">&lt;?</span><span class="pln">php<br>$db </span><span class="pun">=</span><span class="pln"> mysql_connect</span><span class="pun">(</span><span class="str">'localhost'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'username'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'password'</span><span class="pun">);</span><span class="pln"><br>mysql_select_db</span><span class="pun">(</span><span class="str">'school'</span><span class="pun">,</span><span class="pln"> $db</span><span class="pun">);</span><span class="pln"><br><br>$studentName </span><span class="pun">=</span><span class="pln"> mysql_real_escape_string</span><span class="pun">(</span><span class="pln">$_POST</span><span class="pun">[</span><span class="str">'student_name'</span><span class="pun">],</span><span class="pln"> $db</span><span class="pun">);</span><span class="pln"><br><br>$queryResult </span><span class="pun">=</span><span class="pln"> mysql_query</span><span class="pun">(</span><span class="str">"INSERT INTO Students (name) VALUE ('{$studentName}')"</span><span class="pun">);</span><span class="pln"><br><br></span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$queryResult</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; echo </span><span class="str">'Success.'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; echo </span><span class="str">'Insertion failed. Please try again.'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="pun">?&gt;</span></pre><p>As you see, doing it is incredibly easy yet many people fail to do this and only find out when it is too late. Other extensions support something called prepared statements. An example of a such extension is <a href="http://php.net/pdo">PDO</a> (PHP Data Objects). Let us take a look at how that works:</p>
+<pre class="prettyprint lang-php"><span class="pun">&lt;?</span><span class="pln">php<br>$db </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> PDO</span><span class="pun">(</span><span class="str">'mysql:host=localhost;dbname=school'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'username'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'password'</span><span class="pun">);</span><span class="pln"><br><br>$stmt </span><span class="pun">=</span><span class="pln"> $db</span><span class="pun">-&gt;</span><span class="pln">prepare</span><span class="pun">(</span><span class="str">'INSERT INTO Students (name) VALUES (?)'</span><span class="pun">);</span><span class="pln"><br><br></span><span class="kwd">try</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; $stmt</span><span class="pun">-&gt;</span><span class="pln">execute</span><span class="pun">(</span><span class="pln">array</span><span class="pun">(</span><span class="pln">$_POST</span><span class="pun">[</span><span class="str">'student_name'</span><span class="pun">]));</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; echo </span><span class="str">'Success.'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="kwd">catch</span><span class="pun">(</span><span class="typ">PDOException</span><span class="pln"> $e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; echo </span><span class="str">'Insertion failed. Please try again.'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="pun">?&gt;</span></pre><p>If you have many fields you need to use in your query then it might be a little difficult remembering the order of all these different question marks which act as place holders for the data. An alternate syntax is using named parameters. In our case it would look like this:</p>
+<pre class="prettyprint lang-php"><span class="pun">&lt;?</span><span class="pln">php<br>$db </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> PDO</span><span class="pun">(</span><span class="str">'mysql:host=localhost;dbname=school'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'username'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'password'</span><span class="pun">);</span><span class="pln"><br><br>$stmt </span><span class="pun">=</span><span class="pln"> $db</span><span class="pun">-&gt;</span><span class="pln">prepare</span><span class="pun">(</span><span class="str">'INSERT INTO Students (name) VALUES (:name)'</span><span class="pun">);</span><span class="pln"><br><br></span><span class="kwd">try</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; $stmt</span><span class="pun">-&gt;</span><span class="pln">execute</span><span class="pun">(</span><span class="pln">array</span><span class="pun">(</span><span class="str">'name'</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> $_POST</span><span class="pun">[</span><span class="str">'student_name'</span><span class="pun">]));</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; echo </span><span class="str">'Success.'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="kwd">catch</span><span class="pun">(</span><span class="typ">PDOException</span><span class="pln"> $e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; echo </span><span class="str">'Insertion failed. Please try again.'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br></span><span class="pun">?&gt;</span></pre><p>Obviously, in our case this would not have any benefits, but as I said, if you have many parameters then you might find that more useful. There can be other reasons why using prepared statements would be useful, but I will leave that to research for yourself.</p>
+<p>The <a href="http://php.net/mysqli">mysqli</a> (MySQL improved) extension has support for prepared statements as well, so if you are using that then check out its documentation to see the syntax.</p>
+<p>The golden rule regarding this is that <i>nothing</i> is to be trusted and <i>all</i> data should be escaped.</p>
+<p>Additionally, I mentioned earlier that users should not get information from error messages. Not only is it irrelevant, but it may also be information that may aid people with malicious purposes. You may sometimes be told that you should add <tt>or die(mysql_error())</tt> to the end of your query calls to functions like <tt>mysql_query()</tt>. However, you should <i>not</i> do that. By doing that you are no longer using PHP's error and exception handling functionality and you remove the opportunity to control whether errors should be displayed or not. In my opinion the best solution would be to use PHP's <a href="http://php.net/manual/en/language.exceptions.php">exceptions</a>. If you do not want to do that then at least do something like <tt>or trigger_error('Query failed: '. mysql_error())</tt>. By doing that you are utilizing PHP's built-in functionality and you will be able to use the methods discussed under Error Reporting. Moreover, ending script execution with <tt>die()</tt> is simply bad practice. You will not be able to give the user a proper error page and you will not be able to do any cleaning up for the rest of the script.</p>
+<h4>4. Cross Site Scripting</h4><p>Cross-Site Scripting, abbreviated XSS, is another common security issue. This issue is relevant whenever content that comes from the user will be redisplayed on the screen. It is essentially when Javascript is injected into the HTML source. We could for instance imaging a forum. On a forum users will be able to post messages that will be displayed for other users. We want the users to be able to format their messages and HTML is just perfect for that, right? There is just a minor problem... Not all users are equally nice. The same kind of people that might want to drop the school's student table from the previous section might also want to do something here. Specifically what they might want to do is insert Javascript into the source. This might be for various purposes. It could be simply for annoying by creating an infinite loop of alert messages which would force the user to shutdown the browser or it could be redirecting the users to websites such as goatse or tubgirl (you might not want to check what it is if you do not already know). Other, more sofisticated attacks, could be writing a keylogger that logs and sends keystrokes (such as passwords) to an external website or the injected Javascript could be retrieving the users' cookies (more on the latter later in this tutorial).</p>
+<h5>4.1. XSS Protection</h5><p>As a matter of fact, this is rather easy to protect yourself from as well. PHP has a nifty function that is useful in this instance which is called <a href="http://php.net/htmlentities"><tt>htmlentities()</tt></a>. It will simply convert characters which have a meaning in HTML to their corresponding entities. For instance, HTML tags start with a lower-than sign and that particular character will be converted to <tt>&amp;lt;</tt>. If you care about validation of your HTML (and you should!) then this will also help along with that.</p>
+<p>We just have one problem. Our original example was a forum system and we wanted to give the users the opportunity to format their posts. However, the fix we just implemented removed this opportunity so we need to give them an alternate one. One with which we can control what they may do and not do. A common feature is called bbcodes. It has a syntax very similar to HTML and I am quite sure you are familiar with it if you have ever frequented any forum. Be aware though! You might get some additional XSS security holes with some tags.</p>
+<p>A common bbcode tag is the URL tag. We could imagine that someone entered </p>
+<pre class="bbcode">[url=http://www.phpfreaks.com]The best PHP website[/url]</pre><p> which would be converted to: </p>
+<pre class="bbcode">&lt;a href="http://www.phpfreaks.com"&gt;The best PHP website&lt;/a&gt;</pre><p>. At first glance there is no issue with allowing that. However, URLs like <tt>javascript:alert('Hi')</tt> are also allowed and they will, obviously, execute the entered Javascript. Similarly, in some lower versions of Internet Explorer (IE6 and below) that URL format is allowed and will execute Javascript so we have to take care of that as well.</p>
+<p>For both the two before mentioned instances we might want to check that the protocol is one we would allow. It would be better to create a white-list of allowed protocols instead of creating a black-list of disallowed protocols. Simply select the protocols you want (e.g. http, https and ftp) and disallow <i>all</i> other.</p>
+<p>Finally, <a href="http://ha.ckers.org/xss.html">this XSS cheatsheet</a> might be useful to you. Both when learning about XSS as well as testing that your application is secure.</p>
+<h4>5. External file access</h4><p>Normally, pages ending with <tt>.php</tt> will be handled forwarded to PHP by Apache and therefore the code will be hidden from the users. That the source code is hidden is one of the things that characterizes server-side scripting languages such as PHP. However, the PHP module or Apache might fail and the code might be displayed in plain unparsed text to the user. This is definitely not good. First of all, if the source is visible then it is much easier to find security issues in your application. Additionally, some scripts contain configuration files within the document root (the directory in which all files and sub-folders are publicly accessible from the outside world) and those will obviously not be parsed either thus presented to the user if they enter the filename into the URL. Personally I have experienced this before where I was on a small website and suddenly a misconfiguration of some sort displayed the source code to me. The website used a widely used application and I happened to know where the configuration file was. Sure enough, I was able to view that as well and from that I gathered the root password for the server (bad security practice to use the same password for multiple purposes and it is also bad security practice to use the root MySQL user). Being a nice person I did not do anything with it, but other people might not be as nice as I am and if you have the root password for a server then you can essentially do <tt>anything</tt> with it.</p>
+<p>Another instance of this is the popular website Facebook which you have probably heard about in some way or another. What I explained before (server misconfiguration resulting in leaked source code) also has also <a href="http://www.techcrunch.com/2007/08/11/facebook-source-code-leaked/">happened to Facebook</a>. Even big companies with people <i>paid</i> to configure the server apparently sometimes screws up and therefore it is necessary to take some security precautions in order to prevent source leakage if something like that should ever happen (something Facebook apparently did not).</p>
+<p>It all has to do with <i>how</i> you layout your directory structure. So, all files within the document root can be retrieved by the user. Therefore we might as well move everything else out of there so people cannot directly access it. This means we might have <tt>index.php</tt> and some static files such as CSS, Javascript and images laying inside the document root. We can even take it further and do so the only thing that is in <tt>index.php</tt> is the following:</p>
+<pre class="prettyprint lang-php"><span class="pun">&lt;?</span><span class="pln">php<br></span><span class="kwd">require</span><span class="pln"> </span><span class="str">'../public_index.php'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">?&gt;</span></pre><p>That particular snippet is the <i>only</i> thing the user will ever be able to see should something happen. So we might have a directory structure that looks like this:</p>
+<pre class="bbcode">/application
+  /controllers
+  /models
+  /views
+/library
+/public_html &lt;-- document root
+  /index.php
+  /media
+    /images
+    /javascript
+    /css
+/config
+/cache
+/tmp
+/public_index.php
+/logs</pre><p>By laying out your files in this manner you will prevent that people will see things they are not supposed to see. It is easy to do so there is no reason why you would not.</p>
+<h4>6. Remote file inclusion</h4><p>Remote file inclusion attacks (sometimes abbreviated RFI) is a vulnerability many people probably do not know of, but it is a very serious issue that also must be addressed. As the name implies, it is when remote files are included, but what exactly does that? Let us look at an example:</p>
+<pre class="prettyprint lang-php"><span class="pun">&lt;?</span><span class="pln">php<br>$page </span><span class="pun">=</span><span class="pln"> isset</span><span class="pun">(</span><span class="pln">$_GET</span><span class="pun">[</span><span class="str">'page'</span><span class="pun">])</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> $_GET</span><span class="pun">[</span><span class="str">'page'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">'home'</span><span class="pun">;</span><span class="pln"><br><br></span><span class="kwd">require</span><span class="pln"> $page </span><span class="pun">.</span><span class="pln"> </span><span class="str">'.php'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">?&gt;</span></pre><p>This is a very basic front controller that will forward the request to whatever file that should be responsible for that particular request.</p>
+<p>Imagine that at http://example.com/malice.php a file exists and our script is located at http://site.com/index.php. The attacker will do this request: http://site.com/index.php?page=http://example.com/malice. This file will get executed when it is included and it will a write a new file to the disk. This file could be a shell which would allow people to execute commands to the terminal from it as well as other things they should not bea ble to. Another thing the attacker can do is set <tt>page</tt> to http://example.com/malice.php? (note the ending question mark). That will make whatever follows it part of the query string and therefore ignored by the server the file is getting included from. Why this is a security issue should be pretty obvious. People should definitely <i>not</i> be able to execute whatever commands they want on our server, so how can we prevent them?</p>
+<p>There are a couple of <tt>php.ini</tt> directives you can use to prevent this:</p>
+<ul>
+<li><b><tt>allow_url_fopen</tt></b> this directive is set to on by default and it controls whether remote files should be includable.</li>
+<li><b><tt>allow_url_include</tt></b> this directive is set to off by default and was introduced in PHP 5.2. It controls whether the <tt>include()</tt>, <tt>require()</tt>, <tt>include_once()</tt> and <tt>require_once()</tt> should be able to include remote files. In versions below PHP 5.2 this was also controlled by <tt>allow_url_fopen</tt>. Furthermore, if <tt>allow_url_fopen</tt> is set to off then this directive will be ignored and set to off as well.</li></ul><p>Basically those two directives will enable you to set the required security settings you will need. Again, no data that is not from the inside of your system should be trusted. You must validate user input and ensure that people will not enter malformed or unexpected data.</p>
+<p>One of our other administrators, Thomas Johnson, has written a small tutorial about how you can use Apache to block RFI attacks called <a href="http://www.phpfreaks.com/tutorial/preventing-remote-file-include-attacks-with-mod-rewrite">Preventing remote file include attacks with mod rewrite</a>. You might want to check that out as well if you are concerned about RFI vulnerabilities.</p>
+<h4>7. Session security</h4><p>Sessions and cookies are also two things where you have to watch out. Although they cannot breach your application's security they can be used to compromise user accounts.</p>
+<p>When you are using sessions, PHP will most often store a cookie on the client computer called <tt>PHPSESSID</tt> (can be changed by you). This cookie will hold a value, a session identifier, which is associated with some sort of data on the server. If the user has a valid session ID then the data associated with the session will get into the <tt>$_SESSION</tt> super-global array. Sessions can also be transferred via the URL. In that case it would be something like <tt>?PHPSESSID=id_here</tt>.</p>
+<h5>7.1. Stealing the cookies</h5><p>Imagine that you have a key for a vault in your bank. If you have the key then you can get whatever is in the vault. The session ID works a bit like that. However, your key for your vault can be stolen and similarly can the session ID of your users (including you) be stolen or intercepted. </p>
+<p>For the record, just because I used a vault/key analogy then it does not mean that you should put secret or important data of some sort in your sessions.</p>
+<p>Earlier we talked about XSS and I mentioned briefly that it could be used to steal people's cookies. That is the most common way cookies are stolen. This cookie could be <tt>PHPSESSID</tt> (or whatever you may have renamed it to. When you steal a session ID and try to use it again it is called <i>session fixation</i>. So... if you can get a valid session ID and that session is used for something like authentication then you will essentially be logged in as that user. Obviously that is not a good thing - especially not if the user is high ranking with administrative privileges.</p>
+<h5>7.2. Issues with shared hosting</h5><p>Most people host their website on what is called <i>shared hosting</i>. It is basically when there are multiple people having their websites hosted on a single server. On a server with a Linux operating system session data will by default be stored in the <tt>/tmp</tt> directory. It is a directory that stores temporary data and it will obviously have to be readable and writable by everyone. Therefore, if your session data is stored in there, which it is by default, then the other users can find it if they look hard enough. This poses the same security issues as with cookies being stolen using XSS.</p>
+<h5>7.3. Preventing session fixation</h5><p>Now that we have talked a bit about how the session ID can be stolen then let us talk a bit about how we can minimize the risk session fixation.</p>
+<p>One thing we can do is to change the session ID often. If we do that then the chance that the intercepted session ID will be valid will be greatly minimized if that ID changes often. We can use one of PHP' built-in functions called <a href="http://php.net/session_regenerate_id"><tt>session_regenerate_id()</tt></a>. When we call this function the session ID will be, no surprise, regenerated. The client will simply be informed that the ID has changed via an HTTP response header called <tt>Set-Cookie</tt>.</p>
+<p>If you are using PHP 5.2+ then you can tell the browser that Javascript should not be given access to the cookie using a flag called <tt>httponly</tt>. You can set this flag using the <tt>php.ini</tt> directive called <a href="http://php.net/manual/en/session.configuration.php#ini.session.cookie-httponly"><tt>session.cookie_httponly</tt></a> or you can use the <a href="http://php.net/session_set_cookie_params"><tt>session_set_cookie_params()</tt></a> function.</p>
+<p>Regarding the issue with the shared hosts, the fix is simple: store the data where only you have access. You can use the directive called <a href="http://php.net/manual/en/session.configuration.php#ini.session.save-path"><tt>session.save_path</tt></a> to set another path for storing them. You can also store them in a database, but then you will have to write your own handler using the function called <a href="http://php.net/session_set_save_handler"><tt>session_set_save_handler()</tt></a>.</p>
+<h4>8. Cross-site request forgery</h4><p>Cross-site request forgery (CSRF) is when you trick the user into making a request they have never made. Imagine that in your application it is possible to delete users like this: <tt>/user/delete/Joe</tt>. That would delete the user with the username "Joe". A malicious user might place this bit of HTML on his website:</p>
+<pre class="prettyprint lang-html"><span class="pun">&lt;</span><span class="tag">img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://example.com/user/delete/Joe"</span><span class="pln"> </span><span class="atn">height</span><span class="pun">=</span><span class="atv">"1"</span><span class="pln"> </span><span class="atn">width</span><span class="pun">=</span><span class="atv">"1"</span><span class="pln"> </span><span class="pun">/&gt;</span></pre><p>This will basically trick the user into making a request to that page without them knowing it. Obviously only people who are logged in as administrators should be able to call this URL and therefore it will fail for most users. However, if a logged in administrator goes to the page where the above piece of HTML is located then the request will be successfully completed and "Joe" will be gone.</p>
+<p>How can we prevent this? Well, in this case we could simply ask the admin to verify the action with his password before performing it. Yes, I know, this is kind of like Windows Vista's UAC (User Account Control) that people claim is incredibly annoying and prompts them to verify their action every fifth millisecond, but sometimes you will, unfortunately, have to add just a little amount of nuisance in order to keep your application safe.</p>
+<p>Had the account come from a form then we could simply require that the information (in the previous case the username) be submitted using post and read it like <tt>$_POST['username']</tt>. However, this adds only a minimum of extra security. More sophisticated attacks than the above could just as easily trick the user into performing a POST request instead GET. We could use the "enter your password" method like before, but we could also use another kind of token. Imagine this form:</p>
+<pre class="prettyprint lang-html"><span class="pun">&lt;?</span><span class="pln">php<br>session_start</span><span class="pun">();</span><span class="pln"><br>$_SESSION</span><span class="pun">[</span><span class="str">'token'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> uniqid</span><span class="pun">(</span><span class="pln">md5</span><span class="pun">(</span><span class="pln">microtime</span><span class="pun">()),</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">?&gt;</span><span class="pln"><br><br></span><span class="pun">&lt;</span><span class="tag">form</span><span class="pln"> </span><span class="atn">action</span><span class="pun">=</span><span class="atv">"/delete-user.php"</span><span class="pln"> </span><span class="atn">method</span><span class="pun">=</span><span class="atv">"post"</span><span class="pun">&gt;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;input type="hidden" name="token" value="</span><span class="pun">&lt;?</span><span class="pln">php echo<br>&nbsp; &nbsp; &nbsp; &nbsp; $_SESSION</span><span class="pun">[</span><span class="str">'token'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">?&gt;</span><span class="pln">" /&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; <br>&nbsp; &nbsp; &nbsp; &nbsp; Username: </span><span class="pun">&lt;</span><span class="tag">input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"username"</span><span class="pln"> </span><span class="pun">/&gt;</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">&lt;</span><span class="tag">button</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"submit"</span><span class="pun">&gt;</span><span class="pln">Delete user</span><span class="pun">&lt;/</span><span class="tag">button</span><span class="pun">&gt;</span><span class="pln"><br></span><span class="pun">&lt;/</span><span class="tag">form</span><span class="pun">&gt;</span></pre><p>Here we have added a hidden field called <tt>token</tt> and stored its content in a session. On the next page we can do something like this:</p>
+<pre class="prettyprint lang-php"><span class="pun">&lt;?</span><span class="pln">php<br>session_start</span><span class="pun">();</span><span class="pln"><br><br></span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$_POST</span><span class="pun">[</span><span class="str">'token'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">!==</span><span class="pln"> $_SESSION</span><span class="pun">[</span><span class="str">'token'</span><span class="pun">])</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">die</span><span class="pun">(</span><span class="str">'Invalid token'</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br><br></span><span class="com">// form processing here</span><span class="pln"><br></span><span class="pun">?&gt;</span></pre><p>We simply check that it is a valid token and we have then successfully ensured that the request did in fact come from the form.</p>
+<h4>9. Directory traversal</h4><p>Imagine the same script we used when talking about RFI attacks:</p>
+<pre class="prettyprint lang-php"><span class="pun">&lt;?</span><span class="pln">php<br>$page </span><span class="pun">=</span><span class="pln"> isset</span><span class="pun">(</span><span class="pln">$_GET</span><span class="pun">[</span><span class="str">'page'</span><span class="pun">])</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> $_GET</span><span class="pun">[</span><span class="str">'page'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">'home'</span><span class="pun">;</span><span class="pln"><br><br></span><span class="kwd">require</span><span class="pln"> $page </span><span class="pun">.</span><span class="pln"> </span><span class="str">'.php'</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">?&gt;</span></pre><p>We will just say that this particular file is stored in the following path: <tt>/home/someone/public_html/index.php</tt>. The attacker could then do: <tt>index.php?page=../secret</tt></p>
+<p>That would give us <tt>/home/someone/secret.php</tt> which would otherwise have been inaccessible. I am sure you could think of more dangerous situations than this particular one.</p>
+<p>There are a couple of ways you could prevent this with. First of all you could have an array of valid pages, e.g.:</p>
+<pre class="prettyprint lang-php"><span class="pln">$pages </span><span class="pun">=</span><span class="pln"> array</span><span class="pun">(</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">'home'</span><span class="pun">,</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">'login'</span><span class="pun">,</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">'logout'</span><span class="pun">,</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// etc.</span><span class="pln"><br></span><span class="pun">);</span><span class="pln"><br><br></span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">in_array</span><span class="pun">(</span><span class="pln">$page</span><span class="pun">,</span><span class="pln"> $pages</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">die</span><span class="pun">(</span><span class="str">'Invalid page'</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span></pre><p>Another thing you could do is check that the requested file matches a particular format:</p>
+<pre class="prettyprint lang-php"><span class="pln">$file </span><span class="pun">=</span><span class="pln"> str_replace</span><span class="pun">(</span><span class="str">'\\'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> realpath</span><span class="pun">(</span><span class="pln">$page </span><span class="pun">.</span><span class="pln"> </span><span class="str">'.php'</span><span class="pun">));</span><span class="pln"><br><br></span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">preg_match</span><span class="pun">(</span><span class="str">'%^/home/someone/public_html/[a-z]+\.php$%'</span><span class="pun">,</span><span class="pln"> $file</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">die</span><span class="pun">(</span><span class="str">'Invalid page'</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br><br>include $file</span><span class="pun">;</span></pre><p>Basically you need to verify that the entered information is valid and conforms to what you expected.</p>
+<h4>10. Conclusion</h4><p>So... In this tutorial we have talked about a lot of different security issues that you should consider and we have also talked about how much information about your application you should reveal to your users.</p>
+<p>Remember, no information can be trusted so you need to validate, filter and/or escape both input and output that does not come <i>directly</i> from your system.</p>
+					</div>
+
+		<h2>Comments</h2>
+
+
+<div id="comments">
+				<div id="comment-103" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/john010117" class="username">John McKenzie</a></span>
+					<span class="info date">Jun 30, 2008 4:07:27 PM</span>
+				</cite>
+				<blockquote>
+					<p>You wrote a very nice tutorial here. I'm going to keep all these security advices in mind.</p>
+				</blockquote>
+							</div>
+					<div id="comment-106" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/HoTDaWg" class="username">HoTDaWg</a></span>
+					<span class="info date">Jul 1, 2008 9:46:22 PM</span>
+				</cite>
+				<blockquote>
+					<p>a great article,<br>
+definitely bookmarked.</p>
+				</blockquote>
+							</div>
+					<div id="comment-107" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/rupertrealbear" class="username">rupertrealbear</a></span>
+					<span class="info date">Jul 2, 2008 6:40:55 PM</span>
+				</cite>
+				<blockquote>
+					<p>I actually created a post in the Forums asking where to find a good tutorial on PHP security: it was right here on the home page!</p>
+				</blockquote>
+							</div>
+					<div id="comment-115" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/ILYAS415" class="username">Wasim Ilyas</a></span>
+					<span class="info date">Jul 11, 2008 8:36:42 AM</span>
+				</cite>
+				<blockquote>
+					<p>Great tutorial - explains alot of technical stuff definately recommended</p>
+				</blockquote>
+							</div>
+					<div id="comment-120" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Flames" class="username">Flames</a></span>
+					<span class="info date">Jul 24, 2008 8:36:44 AM</span>
+				</cite>
+				<blockquote>
+					<p>about the mysql injection, how would such a user find out the name of the table/structure of the table so they could put something to damage the database?</p>
+<p>is there a way of stopping them finding out the database/table structure?</p>
+				</blockquote>
+							</div>
+					<div id="comment-121" class="comment even author">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Daniel0" class="username">Daniel  </a></span>
+					<span class="info date">Jul 24, 2008 10:00:29 AM</span>
+				</cite>
+				<blockquote>
+					<p>Flames: It could be guesswork, but there are also queries that will allow you to see how the tables are laid out. It could also be an open source app, and it that case it would be as simple as checking the source.</p>
+				</blockquote>
+							</div>
+					<div id="comment-122" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Flames" class="username">Flames</a></span>
+					<span class="info date">Jul 24, 2008 11:07:42 AM</span>
+				</cite>
+				<blockquote>
+					<p>k, i've been trying to stop mysql injection and although its taken time i finally got it to work without random apostrophes being put in places :D.</p>
+				</blockquote>
+							</div>
+					<div id="comment-124" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/dezkit" class="username">dezkit</a></span>
+					<span class="info date">Jul 26, 2008 9:14:19 PM</span>
+				</cite>
+				<blockquote>
+					<p>Views: 17435 lol</p>
+				</blockquote>
+							</div>
+					<div id="comment-125" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Herve" class="username">Hervé Thouzard</a></span>
+					<span class="info date">Jul 27, 2008 3:11:32 AM</span>
+				</cite>
+				<blockquote>
+					<p>One part is missing, security problems related to emails.</p>
+				</blockquote>
+							</div>
+					<div id="comment-126" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/libertyct" class="username">libertyct</a></span>
+					<span class="info date">Jul 28, 2008 10:44:46 AM</span>
+				</cite>
+				<blockquote>
+					<p>good stuff!</p>
+				</blockquote>
+							</div>
+					<div id="comment-130" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Webgirl" class="username">Dorothy Wegmueller</a></span>
+					<span class="info date">Aug 5, 2008 6:14:18 PM</span>
+				</cite>
+				<blockquote>
+					<p>Im happy I found this tutorial - dont understand lots of stuff but will re-read so that it sits.</p>
+				</blockquote>
+							</div>
+					<div id="comment-131" class="comment even author">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Daniel0" class="username">Daniel  </a></span>
+					<span class="info date">Aug 5, 2008 7:53:32 PM</span>
+				</cite>
+				<blockquote>
+					<p>Well, feel free to ask in the forums if there is anything specific in the tutorial you need help with :)</p>
+				</blockquote>
+							</div>
+					<div id="comment-133" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/cyberbuff" class="username">cyberbuff</a></span>
+					<span class="info date">Aug 11, 2008 4:57:40 AM</span>
+				</cite>
+				<blockquote>
+					<p>Very nice tutorial indeed. It is very helpful for newbie's like me.</p>
+				</blockquote>
+							</div>
+					<div id="comment-134" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/budman85" class="username">budman85</a></span>
+					<span class="info date">Aug 12, 2008 8:11:32 PM</span>
+				</cite>
+				<blockquote>
+					<p>Excellent tutorial.  I've had experience with other scripting languages and decided to try PHP.  This is really a great start what to look out for and how to design with these dangers in mind.  </p>
+<p>One question about the include(), mostly for db access.  Some showed using a config.pm that would contain passwords to the db.   </p>
+<p>Would you consider this secure?</p>
+<p>mkdir  public_html/secure<br>
+chmod 711 public_html/secure<br>
+create the config.pm containing the db access</p>
+<p>in the php script, I add<br>
+  include('../secure/config.pm');</p>
+<p>Would it be better to not be in the document root at all?<br>
+I notice in the tree, the config dir is in the system root, not doc root.  </p>
+<p>Thanks</p>
+				</blockquote>
+							</div>
+					<div id="comment-135" class="comment author">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Daniel0" class="username">Daniel  </a></span>
+					<span class="info date">Aug 13, 2008 11:10:32 AM</span>
+				</cite>
+				<blockquote>
+					<p>The safest way would be to not place it within document root <i>at all</i>.</p>
+				</blockquote>
+							</div>
+					<div id="comment-137" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/vnums" class="username">vnums</a></span>
+					<span class="info date">Aug 15, 2008 11:15:05 AM</span>
+				</cite>
+				<blockquote>
+					<p>Daniel, great article, was a good read and learned a lot (implementing some of this stuff as I'm writing this.)  In doing so, I've noticed that the error_reporting and error_log statements in .htaccess files seem to not work unless they are preceeded by php_value, and not php_flag as stated in the article.  Feel free to correct me if I'm wrong, I just thought I'd point it out in case anyone else ran into the issue.</p>
+<p>Thanks again :)</p>
+				</blockquote>
+							</div>
+					<div id="comment-159" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/prime" class="username">Brad Floyd</a></span>
+					<span class="info date">Sep 17, 2008 11:13:51 PM</span>
+				</cite>
+				<blockquote>
+					<p>the pdf article for download just gets a 404</p>
+				</blockquote>
+							</div>
+					<div id="comment-160" class="comment even author">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Daniel0" class="username">Daniel  </a></span>
+					<span class="info date">Sep 18, 2008 1:25:08 PM</span>
+				</cite>
+				<blockquote>
+					<p>Ooops... sorry about that. It's back up now.</p>
+				</blockquote>
+							</div>
+					<div id="comment-161" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/prime" class="username">Brad Floyd</a></span>
+					<span class="info date">Sep 18, 2008 7:34:22 PM</span>
+				</cite>
+				<blockquote>
+					<p>cool :-) Just thought I'd point it out since security is one aspect people need to pay more attention to I agree</p>
+				</blockquote>
+							</div>
+					<div id="comment-184" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/BlueBoden" class="username">BlueBoden</a></span>
+					<span class="info date">Nov 11, 2008 4:20:41 AM</span>
+				</cite>
+				<blockquote>
+					<p>However, wouldn't RFI only be an issue if PHP - Register globals is turned on?</p>
+<p>Note some shared hosts has it disabled by default.</p>
+				</blockquote>
+							</div>
+					<div id="comment-231" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/derrida" class="username">derrida</a></span>
+					<span class="info date">Feb 28, 2009 7:24:09 AM</span>
+				</cite>
+				<blockquote>
+					<p>hi<br>
+can you please explain how to build the log_errors file?</p>
+				</blockquote>
+							</div>
+					<div id="comment-232" class="comment even author">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Daniel0" class="username">Daniel  </a></span>
+					<span class="info date">Feb 28, 2009 8:29:55 AM</span>
+				</cite>
+				<blockquote>
+					<p>I don't understand your question. The log_errors directive simply turns logging of errors on or off.</p>
+				</blockquote>
+							</div>
+					<div id="comment-233" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/derrida" class="username">derrida</a></span>
+					<span class="info date">Mar 1, 2009 3:28:23 AM</span>
+				</cite>
+				<blockquote>
+					<p>so there is no need to write a file? you write: error_log: this is the path of the file......<br>
+i understood that i need to write some sort of a file. if not how do i know the right path?<br>
+best regards</p>
+				</blockquote>
+							</div>
+					<div id="comment-249" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/brandon88tube" class="username">brandon88tube</a></span>
+					<span class="info date">Apr 8, 2009 11:30:41 PM</span>
+				</cite>
+				<blockquote>
+					<p>Sorry, I don't quite understand the structure that you are talking about. <br>
+/application<br>
+  /controllers<br>
+  /models<br>
+  /views<br>
+/library<br>
+/public_html &lt;-- document root<br>
+  /index.php<br>
+  /media<br>
+    /images<br>
+    /javascript<br>
+    /css<br>
+/config<br>
+/cache<br>
+/tmp<br>
+/public_index.php<br>
+/logs</p>
+<p>I've never really done a live site so I am confused as to how the layout would be on a server that is shared. Lets say I'm on a shared server and they give you your little section that just contains a index.html/php file. How would you set up your site structure?</p>
+				</blockquote>
+							</div>
+					<div id="comment-250" class="comment author">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Daniel0" class="username">Daniel  </a></span>
+					<span class="info date">Apr 9, 2009 3:02:53 AM</span>
+				</cite>
+				<blockquote>
+					<p>The structure was just a sample structure. It doesn't have to be laid out exactly like that, obviously. The idea is just that the majority of the files (i.e. all those files that aren't meant to be accessed directly by the user) should be placed above the document root. In that way they can never get to them. Imagine a misconfiguration on the server that would cause all files to be served in plain text. This would expose your configuration files, which would be bad if it contains things like database credentials. It would also expose your source code, which would be a security issue as well (unless you're just using some open source application, which would have the source accessible anyway).</p>
+<p>If your host only allows you to store things within the document root then you'll obviously have to - or you could switch to a better host. I believe most proper hosts (that would exclude free hosts) allow you to do that.</p>
+				</blockquote>
+							</div>
+					<div id="comment-251" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/brandon88tube" class="username">brandon88tube</a></span>
+					<span class="info date">Apr 11, 2009 5:50:31 PM</span>
+				</cite>
+				<blockquote>
+					<p>Thanks for the reply.</p>
+				</blockquote>
+							</div>
+					<div id="comment-343" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/plutomed" class="username">plutomed</a></span>
+					<span class="info date">Jul 12, 2009 4:48:38 PM</span>
+				</cite>
+				<blockquote>
+					<p>pdf gives a 404 again</p>
+				</blockquote>
+							</div>
+					<div id="comment-346" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/imran7000" class="username">imran7000</a></span>
+					<span class="info date">Jul 16, 2009 9:30:30 AM</span>
+				</cite>
+				<blockquote>
+					<p>very helpful article. thanks</p>
+				</blockquote>
+							</div>
+					<div id="comment-372" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/mjdamato" class="username">mjdamato</a></span>
+					<span class="info date">Aug 11, 2009 11:02:50 AM</span>
+				</cite>
+				<blockquote>
+					<p>I believe there's a typo under item 9:</p>
+<p>"We will just say that this particular file is stored in the following path: /home/someone/public_html/index.php. The attacker could then do: index.php?page=../secret</p>
+<p>That would give us /home/someone/public_html/secret.php which would otherwise have been accessible."</p>
+<p>First off I think you meant to say "INaccessible". Second, wouldn't that parameter give the user access to "/home/someone/secret.php" since the ../ would take theb up a directory?</p>
+				</blockquote>
+							</div>
+					<div id="comment-373" class="comment even author">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Daniel0" class="username">Daniel  </a></span>
+					<span class="info date">Aug 11, 2009 3:37:26 PM</span>
+				</cite>
+				<blockquote>
+					<p>Yes, that is correct. I've fixed it now. Thanks for pointing it out.</p>
+				</blockquote>
+							</div>
+					<div id="comment-408" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/tastro" class="username">tastro</a></span>
+					<span class="info date">Sep 24, 2009 11:31:18 PM</span>
+				</cite>
+				<blockquote>
+					<p>nice tutorial, huh... i'm happy that i knew all the thing before except the cookie thing... but i don't use cookies on my sites so... till i won't use them there shouldn't be a problem. and to the one that asked about the remote file include.</p>
+<p>just don't include / require remote files. :D that's the most secured... but if you really really have to then only if you really trust the site on which the file is. :P</p>
+				</blockquote>
+							</div>
+					<div id="comment-409" class="comment even author">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Daniel0" class="username">Daniel  </a></span>
+					<span class="info date">Sep 25, 2009 2:02:54 AM</span>
+				</cite>
+				<blockquote>
+					<p>RFI is not about you loading remote files, but about people exploiting your insecure code to load remote files.</p>
+				</blockquote>
+							</div>
+					<div id="comment-454" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/dannyluked" class="username">dannyluked</a></span>
+					<span class="info date">Dec 20, 2009 7:10:27 PM</span>
+				</cite>
+				<blockquote>
+					<p>Very good article. You struggle to find such a simple explanation anywhere else on the net!</p>
+				</blockquote>
+							</div>
+					<div id="comment-466" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Bilbo_UK" class="username">Bilbo_UK</a></span>
+					<span class="info date">Feb 23, 2010 5:38:48 AM</span>
+				</cite>
+				<blockquote>
+					<p>Useful tutorial - nice to find everything in one place!</p>
+<p>Just picking up Flames' comment 24 Jul 2008 about how a hacker finds out the name of the table/structure of the table...</p>
+<p>Often this is because programmers give them obvious names: how many people have a table containing user names called "users"? The same for table columns: how often do people call the password column "password"!! Change them!! They don't need to be cryptic, just a bit harder to guess - e.g. "appusers" or "enc_password".</p>
+<p>The same is true for .php filenames.  Do NOT name your configuration file "config.php" - that's the first place a hacker is going to look!</p>
+<p>
+It's also worth mentioning that passwords held in a database should obviously be stored encrypted (i.e. password() function in MySQL) rather than in clear.  Also, if using MySQL for this, you should use the newer password hashing mechanism introduced in MySQL 4.1.  It is especially important to note that even though you might be running MySQL 5, many web hosts (if that is what you are using) tell MySQL to use the pre-4.1 passwords by default (to avoid any problems with old forum/blog/whatever software which only understands the older format).  A simple fix is to tell MySQL to use new format encryption:</p>
+<p>$result = mysql_query("set session old_passwords=false");</p>
+<p>(This causes no problems if MySQL would have used the new format anyway - i.e. no error).</p>
+<p>
+And finally, it is worth pointing out that if you are running a site with one of the many open source blog or forum programs, you really must stay up-to-date with the bug fix releases.  Staying on an older version is just asking to get hacked!  The version you are running is usually displayed at the bottom of every page and the security holes are openly discussed in the bug forums for the whole world to write down and use against YOU!  ;)</p>
+				</blockquote>
+							</div>
+					<div id="comment-491" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/shane18" class="username">shane18</a></span>
+					<span class="info date">Apr 6, 2010 12:17:52 PM</span>
+				</cite>
+				<blockquote>
+					<p>Thanks :)</p>
+				</blockquote>
+							</div>
+					<div id="comment-492" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/ghosebhaskar" class="username">ghosebhaskar</a></span>
+					<span class="info date">Apr 8, 2010 6:55:55 AM</span>
+				</cite>
+				<blockquote>
+					<p>Excellent article!!!<br>
+Everything gathered together, nice one.</p>
+				</blockquote>
+							</div>
+					<div id="comment-501" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/jitesh" class="username">jitesh</a></span>
+					<span class="info date">May 11, 2010 1:07:58 AM</span>
+				</cite>
+				<blockquote>
+					<p>Fine.</p>
+<p>But such many security constrains really nervous me with PHP.</p>
+				</blockquote>
+							</div>
+					<div id="comment-517" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/sanjoyroy" class="username">sanjoyroy</a></span>
+					<span class="info date">Jul 4, 2010 9:53:10 PM</span>
+				</cite>
+				<blockquote>
+					<p>I was searching through google and came accross this article. It covers most of the areas I might look while programming. Nice article! Thanks for posting.</p>
+				</blockquote>
+							</div>
+					<div id="comment-518" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/nortally" class="username">nortally</a></span>
+					<span class="info date">Jul 5, 2010 12:26:07 PM</span>
+				</cite>
+				<blockquote>
+					<p>This is a great tutorial and I'll be re-reading it to make sure I digest it properly.</p>
+<p>Another site recommended always naming your include files .php, so that Apache's php interpreter would be prevent them from being read as plain text. This seemed a trifle kludgy to me, so I added the following to my Apache config</p>
+<p>## Custom script to deny existence of .inc files<br>
+Action inc-handler /cgi-bin/inc-handler<br>
+AddHandler inc-handler .inc</p>
+<p>and wrote a /cgi-bin/inc-handler:<br>
+#!/bin/sh<br>
+echo -e "Content-type: text/html\n\n \<br>
+&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt; \<br>
+&lt;html&gt;&lt;head&gt; \<br>
+&lt;title&gt;404 Not Found&lt;/title&gt; \<br>
+&lt;/head&gt;&lt;body&gt; \<br>
+&lt;h1&gt;Not Found&lt;/h1&gt; \<br>
+&lt;p&gt;The requested URL $REQUEST_URI was not found on this server.&lt;/p&gt; \<br>
+"<br>
+(EOF)</p>
+<p>Now I can put header.inc, footer.inc, etc. at the same level as the .php pages that include them.</p>
+				</blockquote>
+							</div>
+					<div id="comment-521" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/Sovello" class="username">Sovello</a></span>
+					<span class="info date">Jul 26, 2010 6:02:31 PM</span>
+				</cite>
+				<blockquote>
+					<p>I so much loved this. Keep it up guyz<br>
+--I Love Tanzania--</p>
+				</blockquote>
+							</div>
+					<div id="comment-568" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/billckr" class="username">billckr</a></span>
+					<span class="info date">Sep 22, 2010 8:05:56 PM</span>
+				</cite>
+				<blockquote>
+					<p>Very informative.</p>
+				</blockquote>
+							</div>
+					<div id="comment-581" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/timo.veldt" class="username">timo.veldt</a></span>
+					<span class="info date">Oct 14, 2010 8:49:35 AM</span>
+				</cite>
+				<blockquote>
+					<p>I've been structuring a website to the guidelines from this article and I was wondering about the comments made in Section 8. When using a hidden token as described here, this token will be readable on the website if I'm not mistaken? If I'm indeed not mistaken then I wonder how good this measure really is, since it will be sent over the internet quite often, making it easy to sniff out.</p>
+<p>By using a different token each session, it becomes harder for people to get a valid token, but while a certain user's token is still valid, other users can make use of this relatively simple. </p>
+<p>I'm hoping that somebody can straighten this out for me, since I'm curious how I can further improve this system.</p>
+<p>Thanks for any help and thanks for the article!!!</p>
+				</blockquote>
+							</div>
+					<div id="comment-750" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/kostantinos1995" class="username">kostantinos1995</a></span>
+					<span class="info date">Aug 5, 2011 7:04:49 AM</span>
+				</cite>
+				<blockquote>
+					<p>Very informative, thanks mate!</p>
+				</blockquote>
+							</div>
+					<div id="comment-751" class="comment even">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/kostantinos1995" class="username">kostantinos1995</a></span>
+					<span class="info date">Aug 5, 2011 7:04:49 AM</span>
+				</cite>
+				<blockquote>
+					<p>Very informative, thanks mate!</p>
+				</blockquote>
+							</div>
+					<div id="comment-782" class="comment">
+								<cite>
+					<span class="info author"><a href="http://www.phpfreaks.com/profile/new+user" class="username">new user</a></span>
+					<span class="info date">Dec 12, 2011 12:07:57 PM</span>
+				</cite>
+				<blockquote>
+					<p>Thanks for the great tutorial Daniel. I am new to php and this will help me greatly. My only regret is that I didn't find this article sooner.</p>
+				</blockquote>
+							</div>
+		<div class="ad-banner-small">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8794381281316343";
+/* 468x60, created 10/2/10 - PHP Freaks Update */
+google_ad_slot = "1560263540";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/show_ads.js">
+</script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent"><iframe width="468" height="60" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;"></iframe></ins></ins>
+
+</div>
+	<h2>Add Comment</h2>
+	<div id="addcomment">
+					<a href="http://www.phpfreaks.com/user/login">Login</a> or <a href="http://www.phpfreaks.com/user/register">register</a> to post a comment.
+			</div>
+</div>	</div>
+</div>
+		</div>
+
+		<div id="sidebar">
+			<h3 id="membership">Membership</h3>
+
+						<form id="login" method="post" action="http://www.phpfreaks.com/user/login">
+				<fieldset>
+					<legend>Login</legend>
+					<input type="hidden" name="remember" value="1">
+					<input type="hidden" name="from" value="/tutorial/php-security">
+					<input type="text" name="username" id="username" value="username" size="27">
+					<input type="password" name="password" id="password" value="password" size="27">
+					<p><a href="http://www.phpfreaks.com/user/register">register</a> | <a href="http://www.phpfreaks.com/user/forgot-password">forgot password?</a></p>
+					<input type="submit" name="submit" value="login" class="submit">
+				</fieldset>
+			</form>
+			
+			<h3 id="stats">Community Stats</h3>
+
+			<ul id="statslist">
+				<li class="tutorialstats">29 tutorials</li>
+				<li class="memberstats">132,227 members</li>
+				<li class="poststats">1,379,780 forum posts</li>
+				<li class="blogstats">60 blog posts</li>
+			</ul>
+
+			<h3 id="boards">Forum Boards</h3>
+
+			<ul id="forumboards">
+				<li class="php"><a href="http://forums.phpfreaks.com/forum/13-php-coding-help/">PHP Help</a></li>
+				<li class="mysql"><a href="http://forums.phpfreaks.com/forum/15-mysql-help/">MySQL Help</a></li>
+				<li class="application"><a href="http://forums.phpfreaks.com/forum/42-application-design/">Application Design</a></li>
+				<li class="website"><a href="http://forums.phpfreaks.com/forum/22-website-critique/">Website Critique</a></li>
+				<li class="ajax"><a href="http://forums.phpfreaks.com/forum/38-ajax-help/">Ajax Help</a></li>
+			</ul>
+
+						<h3 id="sponsors"></h3>
+			<div class="ad-skyscraper">
+				<script type="text/javascript"><!--
+				google_ad_client = "pub-8794381281316343";
+				/* 120x600, created 10/2/10 - PHP Freaks */
+				google_ad_slot = "1301512451";
+				google_ad_width = 120;
+				google_ad_height = 600;
+				//-->
+				</script>
+				<script type="text/javascript" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/show_ads.js">
+				</script><ins id="aswift_2_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent"><iframe width="120" height="600" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;"></iframe></ins></ins>
+			</div>
+					</div>
+	</div>
+	<div id="bottomAds">
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-8794381281316343";
+		/* 468x60, created 10/2/10 - PHP Freaks Update */
+		google_ad_slot = "1560263540";
+		google_ad_width = 468;
+		google_ad_height = 60;
+		//-->
+		</script>
+		<script type="text/javascript" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/show_ads.js">
+		</script><ins id="aswift_3_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:468px;background-color:transparent"><iframe width="468" height="60" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;"></iframe></ins></ins>
+	</div>
+	<div id="footer">
+		<p id="links">Designed by and developed by <a href="http://www.multimedia-technologies.com/">Multimedia Technologies</a> and <a href="http://degeberg.com/">Daniel Egeberg</a></p>
+		<p>Copyright © PHP Freaks | <a href="http://alphabit.com/" title="Cheap Linux VPS from $5 - Alphabit.com">Cheap Linux VPS from $5 - AlphaBit.com</a></p>
+	</div>
+</div>
+
+<script type="text/javascript" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/jquery.js"></script>
+<script type="text/javascript" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/star_rating.js"></script>
+<script type="text/javascript" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/prettify.js"></script>
+<script type="text/javascript" src="./PHP Freaks - PHP Help Tutorial_ PHP Security_files/phpfreaks.min.js"></script>
+
+
+</body></html>

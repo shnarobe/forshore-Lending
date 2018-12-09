@@ -1,0 +1,7 @@
+fields added
+1-other_income_frequency2-for coborrower
+2-other_income_frequency1-for borrower
+containing div-coborotherincome
+3-property_type
+4-mi_rate_type
+5-mi_comment

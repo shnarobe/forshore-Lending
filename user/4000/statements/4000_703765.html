@@ -1,0 +1,35 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body >
+<script>
+$(document).ready(function(){
+$(window).load(function(){
+$.ajax({
+    url: 'test3.php',
+    method: 'post',
+	dataType:"text",
+    data: {},
+    success: function(data) {
+	var n="";
+	n=JSON.parse(data);
+	alert(n.name);
+	alert(n.bankruptcy);
+	alert(n.relative_province_2);
+	$("#holder").html(data);
+	
+	}
+		   });
+
+}
+);
+
+
+
+});
+
+</script>
+<div id="holder"></div>
+</body>
+</html>

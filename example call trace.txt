@@ -1,0 +1,390 @@
+//note the call stack is from last called method to first. so here [0] is last method called
+[0]=>
+  array(4) {
+    ["file"]=>
+    string(51) "/home/forshorelending/public_html/morController.php"
+    ["line"]=>
+    int(469)
+    ["function"]=>
+    string(9) "applymail"
+    ["args"]=>
+    array(2) {
+      [0]=>
+      &string(7) "krishna"
+      [1]=>
+      &string(18) "keltic19@yahoo.com"
+    }
+  }
+  [1]=>
+  array(4) {
+    ["file"]=>
+    string(51) "/home/forshorelending/public_html/morController.php"
+    ["line"]=>
+    int(328)
+    ["function"]=>
+    string(6) "create"
+    ["args"]=>
+    array(5) {
+      [0]=>
+      &array(104) {
+        ["fname"]=>
+        string(7) "krishna"
+        ["lname"]=>
+        string(9) "robertson"
+        ["email"]=>
+        string(18) "keltic19@yahoo.com"
+        ["dob"]=>
+        string(3) "   "
+        ["mar_status"]=>
+        string(7) "married"
+        ["sin"]=>
+        string(0) ""
+        ["home_p"]=>
+        string(10) "4734567478"
+        ["cell_p"]=>
+        string(10) "4734567478"
+        ["work_p"]=>
+        string(10) "4734567478"
+        ["fax"]=>
+        string(0) ""
+        ["preferred_contact"]=>
+        NULL
+        ["currently"]=>
+        string(3) "own"
+        ["preferred_language"]=>
+        NULL
+        ["dependents"]=>
+        string(1) "4"
+        ["address"]=>
+        string(8) "paradise"
+        ["unit"]=>
+        string(1) "2"
+        ["city"]=>
+        string(8) "StAndrew"
+        ["province"]=>
+        string(21) "northwest territories"
+        ["postal_code"]=>
+        string(7) "A1A 1A1"
+        ["time_at_residence_year"]=>
+        string(0) ""
+        ["time_at_residence_month"]=>
+        string(0) ""
+        ["current_rent"]=>
+        string(2) "55"
+        ["pre_address"]=>
+        string(0) ""
+        ["pre_unit"]=>
+        string(0) ""
+        ["pre_city"]=>
+        string(0) ""
+        ["pre_province"]=>
+        string(0) ""
+        ["pre_postal_code"]=>
+        string(0) ""
+        ["pre_time_at_residence_year"]=>
+        string(0) ""
+        ["pre_time_at_residence_month"]=>
+        string(0) ""
+        ["pre_current_rent"]=>
+        string(0) ""
+        ["self_employed"]=>
+        NULL
+        ["revenue"]=>
+        string(0) ""
+        ["employer"]=>
+        string(0) ""
+        ["emp_address"]=>
+        string(0) ""
+        ["emp_city"]=>
+        string(0) ""
+        ["emp_province"]=>
+        string(7) "alberta"
+        ["emp_postal_code"]=>
+        string(0) ""
+        ["emp_status"]=>
+        string(8) "previous"
+        ["job_title"]=>
+        string(0) ""
+        ["job_type"]=>
+        string(5) "other"
+        ["industry_sector"]=>
+        string(5) "other"
+        ["income_type"]=>
+        string(6) "salary"
+        ["annual_income"]=>
+        string(0) ""
+        ["time_at_job_year"]=>
+        string(0) ""
+        ["time_at_job_month"]=>
+        string(0) ""
+        ["pre_self_employed"]=>
+        NULL
+        ["pre_revenue"]=>
+        string(0) ""
+        ["pre_employer"]=>
+        string(0) ""
+        ["pre_emp_address"]=>
+        string(0) ""
+        ["pre_emp_city"]=>
+        string(0) ""
+        ["pre_emp_province"]=>
+        string(7) "alberta"
+        ["pre_emp_postal_code"]=>
+        string(0) ""
+        ["pre_emp_status"]=>
+        string(8) "previous"
+        ["pre_job_title"]=>
+        string(0) ""
+        ["pre_job_type"]=>
+        string(5) "other"
+        ["pre_industry_sector"]=>
+        string(5) "other"
+        ["pre_income_type"]=>
+        string(6) "salary"
+        ["pre_annual_income"]=>
+        string(0) ""
+        ["pre_time_at_job_year"]=>
+        string(0) ""
+        ["pre_time_at_job_month"]=>
+        string(0) ""
+        ["other_income_1"]=>
+        string(0) ""
+        ["other_income_2"]=>
+        string(0) ""
+        ["other_description_1"]=>
+        string(3) "   "
+        ["other_description_2"]=>
+        string(3) "   "
+        ["np_street_name"]=>
+        string(3) "   "
+        ["np_street_number"]=>
+        string(0) ""
+        ["np_street_type"]=>
+        string(0) ""
+        ["np_direction"]=>
+        string(0) ""
+        ["np_unit"]=>
+        string(3) "   "
+        ["np_city"]=>
+        string(3) "   "
+        ["np_province"]=>
+        string(7) "alberta"
+        ["np_postal_code"]=>
+        string(3) "   "
+        ["np_year_built"]=>
+        string(3) "   "
+        ["np_occupancy"]=>
+        string(0) ""
+        ["np_tenure"]=>
+        string(0) ""
+        ["np_heat_type"]=>
+        string(0) ""
+        ["np_lot_size"]=>
+        string(0) ""
+        ["np_style"]=>
+        string(0) ""
+        ["np_type"]=>
+        string(0) ""
+        ["np_garage_size"]=>
+        string(0) ""
+        ["np_garage_type"]=>
+        string(0) ""
+        ["np_property_age"]=>
+        string(0) ""
+        ["np_mls"]=>
+        string(0) ""
+        ["np_legal_description"]=>
+        string(0) ""
+        ["pv_purchase_price"]=>
+        string(0) ""
+        ["pv_appraised_value"]=>
+        string(3) "   "
+        ["pe_annual_property_taxes"]=>
+        string(0) ""
+        ["pe_monthly_condo_expense"]=>
+        string(3) "   "
+        ["pe_monthly_rental_income"]=>
+        string(0) ""
+        ["pe_monthly_heating_cost"]=>
+        string(3) "   "
+        ["pe_monthly_insurance_fees"]=>
+        string(3) "   "
+        ["pe_rental_expenses"]=>
+        string(3) "   "
+        ["pe_annual_repairs"]=>
+        string(3) "   "
+        ["pe_monthly_hydro_expenses"]=>
+        string(3) "   "
+        ["mi_amortization"]=>
+        string(0) ""
+        ["mi_first_time_buyer"]=>
+        string(3) "   "
+        ["mi_closing_date"]=>
+        string(0) ""
+        ["mi_payment_frequency"]=>
+        string(3) "   "
+        ["mi_term"]=>
+        string(3) "   "
+        ["mi_mortgage_amount"]=>
+        string(3) "   "
+        ["mi_down_payment_amount"]=>
+        string(3) "   "
+        ["mi_product_type"]=>
+        string(0) ""
+        ["mi_insured"]=>
+        string(3) "yes"
+        ["mi_insurer"]=>
+        string(3) "   "
+      }
+      [1]=>
+      &array(64) {
+        ["cofname"]=>
+        string(0) ""
+        ["colname"]=>
+        string(0) ""
+        ["coemail"]=>
+        string(0) ""
+        ["codob"]=>
+        string(3) "   "
+        ["comar_status"]=>
+        string(7) "married"
+        ["cosin"]=>
+        string(0) ""
+        ["cohome_p"]=>
+        string(0) ""
+        ["cocell_p"]=>
+        string(0) ""
+        ["cowork_p"]=>
+        string(0) ""
+        ["cofax"]=>
+        string(0) ""
+        ["copreferred_contact"]=>
+        NULL
+        ["cocurrently"]=>
+        string(3) "own"
+        ["copreferred_language"]=>
+        NULL
+        ["codependents"]=>
+        string(0) ""
+        ["coaddress"]=>
+        string(0) ""
+        ["counit"]=>
+        string(0) ""
+        ["cocity"]=>
+        string(0) ""
+        ["coprovince"]=>
+        string(0) ""
+        ["copostal_code"]=>
+        string(0) ""
+        ["cotime_at_residence_year"]=>
+        string(0) ""
+        ["cotime_at_residence_month"]=>
+        string(0) ""
+        ["cocurrent_rent"]=>
+        string(0) ""
+        ["copre_address"]=>
+        string(0) ""
+        ["copre_unit"]=>
+        string(0) ""
+        ["copre_city"]=>
+        string(0) ""
+        ["copre_province"]=>
+        string(0) ""
+        ["copre_postal_code"]=>
+        string(0) ""
+        ["copre_time_at_residence_year"]=>
+        string(0) ""
+        ["copre_time_at_residence_month"]=>
+        string(0) ""
+        ["copre_current_rent"]=>
+        string(0) ""
+        ["coself_employed"]=>
+        NULL
+        ["corevenue"]=>
+        string(0) ""
+        ["coemployer"]=>
+        string(0) ""
+        ["coemp_address"]=>
+        string(0) ""
+        ["coemp_city"]=>
+        string(0) ""
+        ["coemp_province"]=>
+        string(7) "alberta"
+        ["coemp_postal_code"]=>
+        string(0) ""
+        ["coemp_status"]=>
+        string(8) "previous"
+        ["cojob_title"]=>
+        string(0) ""
+        ["cojob_type"]=>
+        string(5) "other"
+        ["coindustry_sector"]=>
+        string(5) "other"
+        ["coincome_type"]=>
+        string(6) "salary"
+        ["coannual_income"]=>
+        string(0) ""
+        ["cotime_at_job_year"]=>
+        string(0) ""
+        ["cotime_at_job_month"]=>
+        string(0) ""
+        ["copre_self_employed"]=>
+        NULL
+        ["copre_revenue"]=>
+        string(0) ""
+        ["copre_employer"]=>
+        string(0) ""
+        ["copre_emp_address"]=>
+        string(0) ""
+        ["copre_emp_city"]=>
+        string(0) ""
+        ["copre_emp_province"]=>
+        string(7) "alberta"
+        ["copre_emp_postal_code"]=>
+        string(0) ""
+        ["copre_emp_status"]=>
+        string(8) "previous"
+        ["copre_job_title"]=>
+        string(0) ""
+        ["copre_job_type"]=>
+        string(5) "other"
+        ["copre_industry_sector"]=>
+        string(5) "other"
+        ["copre_income_type"]=>
+        string(6) "salary"
+        ["copre_annual_income"]=>
+        string(0) ""
+        ["copre_time_at_job_year"]=>
+        string(0) ""
+        ["copre_time_at_job_month"]=>
+        string(0) ""
+        ["coother_income_1"]=>
+        string(0) ""
+        ["coother_income_2"]=>
+        string(0) ""
+        ["coother_description_1"]=>
+        string(3) "   "
+        ["coother_description_2"]=>
+        string(3) "   "
+      }
+      [2]=>
+      &NULL
+      [3]=>
+      &NULL
+      [4]=>
+      &NULL
+    }
+  }
+  [2]=>
+  array(4) {
+    ["file"]=>
+    string(51) "/home/forshorelending/public_html/morController.php"
+    ["line"]=>
+    int(105)
+    ["function"]=>
+    string(10) "assimilate"
+    ["args"]=>
+    array(0) {
+    }
+  }
+}
